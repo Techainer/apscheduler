@@ -120,7 +120,7 @@ def run_job(job, jobstore_alias, run_times, logger_name):
                 logger.warning('Run time of job "%s" was missed by %s', job, difference)
                 continue
 
-        logger.info('Running job "%s" (scheduled at %s)', job, run_time)
+        logger.debug('Running job "%s" (scheduled at %s)', job, run_time)
         try:
             retval = job.func(*job.args, **job.kwargs)
         except BaseException:
@@ -136,7 +136,7 @@ def run_job(job, jobstore_alias, run_times, logger_name):
         else:
             events.append(JobExecutionEvent(EVENT_JOB_EXECUTED, job.id, jobstore_alias, run_time,
                                             retval=retval))
-            logger.info('Job "%s" executed successfully', job)
+            logger.debug('Job "%s" executed successfully', job)
 
     return events
 
@@ -168,6 +168,6 @@ async def run_coroutine_job(job, jobstore_alias, run_times, logger_name):
         else:
             events.append(JobExecutionEvent(EVENT_JOB_EXECUTED, job.id, jobstore_alias, run_time,
                                             retval=retval))
-            logger.info('Job "%s" executed successfully', job)
+            logger.debug('Job "%s" executed successfully', job)
 
     return events
